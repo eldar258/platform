@@ -3,6 +3,7 @@ package main
 import (
 	"platform/config"
 	"platform/logging"
+	"platform/services"
 )
 
 func writeMessage(logger logging.Logger, cfg config.Configuration) {
@@ -20,13 +21,15 @@ func writeMessage(logger logging.Logger, cfg config.Configuration) {
 }
 
 func main() {
-	var cfg config.Configuration
-	var err error
-	cfg, err = config.Load("config.json")
-	if err != nil {
-		panic(err)
-	}
-	var logger = logging.NewDefaultLogger(cfg)
-	writeMessage(logger, cfg)
-}
+	services.RegisterDefaultServices()
+	services.Call(writeMessage)
 
+	val := struct {
+		message string
+		logging.Logger
+	}{
+		message: "Hello from the struct",
+	}
+	services.Populate(&val)
+	val.Logger.Debug(val.message)
+}
