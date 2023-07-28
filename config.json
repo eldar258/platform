@@ -1,8 +1,15 @@
 {
-  "logging" : {
+  "logging": {
     "level": "debug"
   },
-  "main" : {
-    "message" : "Hello from the config file"
+  "main": {
+    "message": "Hello from the config file"
+  },
+  "files": {
+    "path": "placeholder/files"
+  },
+  "templates": {
+    "path": "placeholder/*.html",
+    "reload": true
   }
 }
